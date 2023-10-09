@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "service";
+package service;
+
+service FileService {
+    //envia a imagem para lá
+    rpc sendImage(stream ImageRequest) returns (ImageReply);
+    //recebe todos os scores acima de 0.6
+    rpc getBetterScores(SocresImageRequest) returns (SocresImageReply);
+    //recebe as duas imagens a original e a static
+    rpc getImage(ReciveImageRequest) returns (ReciveImageReply);
+
+    rpc listImages(ListImagesRequest) returns (ListImagesReply);
+
+}
+//input
+message ImageRequest {
+    bytes data = 1;
+    string contentType = 2;
+    int32 size = 3;
+}
+
+message ListImagesRequest {
+
+}
+
+message SocresImageRequest{
+
+}
+
+message ReciveImageRequest{
+    string imageId = 1;
+}
+
+//output
+message ImageReply {
+    string imageId = 1;
+}
+
+message ListImagesReply {
+    int32 size = 1;
+    string descricao = 2;
+    string imageId = 3;
+}
+
+message SocresImageReply{
+    int32 size = 1;
+    string imageId = 2;
+    string descricao = 3;
+    string score = 4;
+}
+
+message ReciveImageReply{
+    bytes originalimage = 1;
+    bytes staticImage = 2;
+}
